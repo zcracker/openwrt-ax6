@@ -1,3 +1,52 @@
+刷写分区一定要断电在重启，相关文件在代码redmi-ax6目录下
+
+```
+刷写分区表
+mtd erase /dev/mtd1
+mtd write /tmp/ax6-mibib.bin /dev/mtd1
+刷写不死uboot
+mtd erase /dev/mtd7
+mtd write /tmp/uboot-redmi-ax6.bin /dev/mtd7
+刷写支持1G内存CDT
+mtd erase /dev/mtd5
+mtd write /tmp/cdt-AX6_AX3600_1G.bin /dev/mtd5
+
+```
+ttl刷分区和不死uboot方法
+
+```
+setenv serverip 192.168.1.10
+setenv ipaddr 192.168.1.1
+
+tftpboot OEM-mibib.bin && flash 0:MIBIB
+tftpboot ax6-mibib.bin && flash 0:MIBIB
+tftpboot uboot-redmi-ax6.bin && flash 0:APPSBL
+```
+
+
+大分区表结构
+
+```
+root@RedmiAX6:~# cat /proc/mtd
+dev:    size   erasesize  name
+mtd0: 00100000 00020000 "0:sbl1"
+mtd1: 00100000 00020000 "0:mibib"
+mtd2: 00300000 00020000 "0:qsee"
+mtd3: 00080000 00020000 "0:devcfg"
+mtd4: 00080000 00020000 "0:rpm"
+mtd5: 00080000 00020000 "0:cdt"
+mtd6: 00080000 00020000 "0:appsblenv"
+mtd7: 00100000 00020000 "0:appsbl"
+mtd8: 00080000 00020000 "0:art"
+mtd9: 00080000 00020000 "bdata"
+mtd10: 00100000 00020000 "pstore"
+mtd11: 023c0000 00020000 "ubi_kernel"
+mtd12: 06640000 00020000 "rootfs"
+
+```
+
+
+
 ![OpenWrt logo](include/logo.png)
 
 OpenWrt Project is a Linux operating system targeting embedded devices. Instead
